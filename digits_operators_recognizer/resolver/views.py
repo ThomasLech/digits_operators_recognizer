@@ -1,3 +1,7 @@
+import os
+
+from django.conf import settings
+
 'DRF modules'
 # from rest_framework import viewsets
 from rest_framework.views import APIView
@@ -5,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 'DRF utils'
-from django.http import QueryDict
+# from django.http import QueryDict
 
 'Models'
 from digits_operators_recognizer.resolver.models import Image
@@ -14,14 +18,16 @@ from digits_operators_recognizer.resolver.serializers import ImageSerializer
 
 'For function-based views'
 # from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
+# from rest_framework.decorators import api_view
 
 'Encode base64'
 import base64
 from django.core.files.base import ContentFile
 
 from django.http import Http404
-
+	
+'Import OCR scripts'
+from ocr import image
 
 
 class ImageList(APIView):
@@ -60,12 +66,19 @@ class ImageList(APIView):
 		# data.update(dict({'image': raw_content}))
 
 
-
-
 		serializer = ImageSerializer(data=request.data)
 		if serializer.is_valid():
 
+			' Save request image in the database '
 			serializer.save()
+
+			' RUN OCR script '
+			image_path = serializer.data.get('image')[1:]	# We need to remove slash from the beginning of the path
+			image_abs_path = os.path.join(settings.BASE_DIR, image_path)
+
+			' Preprocess requested image '
+			image.preprocess(image_abs_path)
+
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
