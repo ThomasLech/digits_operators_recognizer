@@ -25,9 +25,9 @@ import base64
 from django.core.files.base import ContentFile
 
 from django.http import Http404
-	
+
 'Import OCR scripts'
-from ocr import image
+from ocr import image, recognizer
 
 
 class ImageList(APIView):
@@ -76,8 +76,11 @@ class ImageList(APIView):
 			image_path = serializer.data.get('image')[1:]	# We need to remove slash from the beginning of the path
 			image_abs_path = os.path.join(settings.BASE_DIR, image_path)
 
-			' Preprocess requested image '
-			image.preprocess(image_abs_path)
+			' Extract patterns(digits and arithmetic operators) '
+			patterns = image.extract_patterns(image_abs_path)
+
+			' Run recognizer on each separate pattern '
+			prediction = recognizer.recognize(patterns)
 
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 
