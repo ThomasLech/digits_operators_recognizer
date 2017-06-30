@@ -1,5 +1,7 @@
 env/
 media/
+digits_operators_recognizer/resolver/__pycache__/
+digits_operators_recognizer/__pycache__/
 ocr/__pycache__/
 
 # Windows image file caches
