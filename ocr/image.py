@@ -5,10 +5,6 @@ from skimage.morphology import square, erosion, skeletonize, thin
 # from skimage.measure import find_contours
 import cv2
 
-# import matplotlib
-# matplotlib.use('Agg')
-# import matplotlib.pyplot as plt
-
 ' Preprocess requested image '
 def preprocess(image_abs_path):
 
