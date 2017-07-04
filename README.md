@@ -3,7 +3,7 @@
  <br/>[Windows x86-64 web-based installer](https://www.python.org/ftp/python/3.5.0/python-3.5.0-amd64-webinstall.exe) or [Select & download other installer](https://www.python.org/downloads/release/python-350/).
  <br/><br/>While installing Python please make sure that option 'Add Pytohn 3.5 to PATH' is checked.
 
-2. Install virtuenv package:  
+2. Install virtualenv package:  
 `pip install virtualenv`
 
 3. Create new directory and enter it:  
@@ -44,7 +44,10 @@ pip install -U -r requirements.txt
 
 
 ## Usage
-Navigate to folder with **_run.py_** & run OCR algorithm with following command:
-```
-python run.py <files/folders>
-```
+1. Navigate to folder containing **_manage.py_**.
+2. Create a dabase:
+`python manage.py migrate`
+3. Run server:
+`python manage.py runserver`
+
+You are good to go! :)
