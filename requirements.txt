@@ -1,3 +1,4 @@
 Django
 djangorestframework
 opencv-python
+matplotlib
