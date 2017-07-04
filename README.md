@@ -10,7 +10,7 @@ http://blog.mathocr.com/2017/06/25/store-base64-images-with-Django-REST-framewor
 2. Install virtualenv package:  
 `pip install virtualenv`
 
-3. Create new directory and enter it:  
+3. Create new directory:  
 `mkdir digits_operators_recognizer`
 
 4. Enter newly created directory:  
