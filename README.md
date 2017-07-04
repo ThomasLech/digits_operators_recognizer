@@ -1,5 +1,9 @@
+## Reference
+This repository is a reference to my blog post:  
+http://blog.mathocr.com/2017/06/25/store-base64-images-with-Django-REST-framework.html
+
 ## Installation
-1. Install Python 3.5.0 (for tensorflow/tensorflow-gpu windows compatibility):
+1. Install Python 3.5:
  <br/>[Windows x86-64 web-based installer](https://www.python.org/ftp/python/3.5.0/python-3.5.0-amd64-webinstall.exe) or [Select & download other installer](https://www.python.org/downloads/release/python-350/).
  <br/><br/>While installing Python please make sure that option 'Add Pytohn 3.5 to PATH' is checked.
 
