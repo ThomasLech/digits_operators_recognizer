@@ -2,9 +2,6 @@
 # # from rest_framework import viewsets
 # from rest_framework.views import APIView
 
-
-# from rest_framework import status
-
 'DRF utils'
 # from django.http import QueryDict
 
@@ -31,6 +28,7 @@ from digits_operators_recognizer.resolver.serializers import ImageSerializer
 from digits_operators_recognizer.resolver import serializers
 
 'DRF modules'
+from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
 
