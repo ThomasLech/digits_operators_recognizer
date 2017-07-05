@@ -32,7 +32,7 @@ from django.conf.urls.static import static
 'Wire up our API using automatic URL routing.'
 urlpatterns = [
 	# url(r'^', include(router.urls)),
-	url(r'^', include('digits_operators_recognizer.resolver.urls')),
+	url(r'^api/', include('digits_operators_recognizer.resolver.urls')),
 	url(r'^admin/', admin.site.urls),
 ]
 
