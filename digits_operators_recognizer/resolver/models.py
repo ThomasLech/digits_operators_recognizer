@@ -4,13 +4,12 @@ from django.db import models
 
 class Image(models.Model):
 
-  # Here we specify model fields
+    # Here we specify model fields
+    image = models.ImageField(upload_to='images/%Y/%m/%d/')
+    # auto_now_add set to true makes this field filled with the date of entry creation
+    timestamp = models.DateTimeField(auto_now_add=True)
+    # we will add more fields here later
 
-  image = models.ImageField(upload_to='images/%Y/%m/%d/')
-  timestamp = models.DateTimeField(auto_now_add=True)     # auto_now_add automatically fills this field with the date of entry creation
-  # we will add more fields in later posts
-
-  # Django is using this method to display an object in the Django admin site
-  # and as the value inserted into a template when it displays an object
-  def __str__(self):
-  	return self.image
+    # Django is using this method to display an object in the Django admin site
+    def __str__(self):
+        return self.image

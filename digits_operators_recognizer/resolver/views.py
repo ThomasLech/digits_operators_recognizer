@@ -44,13 +44,15 @@ class ImageList(ListAPIView):
 	'List all images'
 
 	serializer_class = serializers.ImageSerializer
+	permission_classes = (IsAdminUser,)
 	queryset = Image.objects.all()
 
-	def get(self, request, fomart=None):
-
-		serializer = ImageSerializer(self.queryset, many=True, context={'request': Request(request),})
-
-		return Response(serializer.data)
+	# def get(self, request, fomart=None):
+	#
+	# 	queryset = self.get_queryset()
+	# 	serializer = ImageSerializer(queryset, many=True, context={'request': Request(request),})
+	#
+	# 	return Response(serializer.data)
 
 class ImageDetail(RetrieveAPIView):
 
