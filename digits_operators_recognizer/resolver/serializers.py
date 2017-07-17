@@ -3,8 +3,6 @@ from rest_framework import serializers
 
 from django.core.files.base import ContentFile
 
-
-
 class Base64ImageField(serializers.ImageField):
 	"""
 	A Django REST framework field for handling image-uploads through raw post data.

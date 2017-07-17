@@ -15,19 +15,16 @@
 
 # from django.http import Http404
 
-
-
 import os
 from django.conf import settings
 
-'Models'
+# Our model
 from digits_operators_recognizer.resolver.models import Image
 
-'Serializers'
+# Our serializer
 from digits_operators_recognizer.resolver.serializers import ImageSerializer
-from digits_operators_recognizer.resolver import serializers
 
-'DRF modules'
+# DRF modules
 from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -35,7 +32,7 @@ from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from rest_framework.permissions import IsAdminUser
 
-'Import OCR scripts'
+# OCR scripts
 from ocr import image, recognizer
 
 
@@ -43,7 +40,7 @@ class ImageList(ListAPIView):
 
 	'List all images'
 
-	serializer_class = serializers.ImageSerializer
+	serializer_class = ImageSerializer
 	permission_classes = (IsAdminUser,)
 	queryset = Image.objects.all()
 
@@ -58,7 +55,7 @@ class ImageDetail(RetrieveAPIView):
 
 	'Retrieve an image instance'
 
-	serializer_class = serializers.ImageSerializer
+	serializer_class = ImageSerializer
 	permission_classes = (IsAdminUser,)
 	queryset =  Image.objects.all()
 
@@ -66,33 +63,29 @@ class ImageCreate(CreateAPIView):
 
 	'Create a new image instance'
 
-	serializer_class = serializers.ImageSerializer
+	serializer_class = ImageSerializer
 
 	def post(self, request):
 
 		serializer = ImageSerializer(data=request.data)
 		if serializer.is_valid():
 
-			' Save request image in the database '
+			# Save request image in the database
 			serializer.save()
 
-			' RUN OCR script '
+			# RUN OCR script
 			image_path = serializer.data.get('image')[1:]	# We need to remove slash from the beginning of the path
 			image_abs_path = os.path.join(settings.BASE_DIR, image_path)
 
-			' Extract patterns(digits and arithmetic operators) '
+			# Extract patterns(digits and arithmetic operators)
 			patterns = image.extract_patterns(image_abs_path)
 
-			' Run recognizer on each separate pattern '
+			# Run recognizer on each separate pattern
 			prediction = recognizer.recognize(patterns)
 
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
 
 
 

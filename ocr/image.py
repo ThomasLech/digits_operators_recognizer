@@ -143,7 +143,12 @@ def extract_patterns(image_abs_path):
 		cv2.fillPoly(pattern, [family['parent']], (0))
 		cv2.fillPoly(pattern, family['children'], (255))
 
-		cv2.imshow('pattern', pattern)
+
+		# Skeletonize pattern
+		pattern_skeleton = thin(255 - pattern)
+		print(pattern_skeleton)
+
+		cv2.imshow('pattern', 255 - img_as_ubyte(pattern_skeleton))
 		cv2.waitKey(0)
 
 	patterns = []
