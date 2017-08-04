@@ -33,7 +33,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from rest_framework.permissions import IsAdminUser
 
 # OCR scripts
-from ocr import image, recognizer
+from ocr import image, model, recognizer
 
 
 class ImageList(ListAPIView):
@@ -43,13 +43,6 @@ class ImageList(ListAPIView):
 	serializer_class = ImageSerializer
 	permission_classes = (IsAdminUser,)
 	queryset = Image.objects.all()
-
-	# def get(self, request, fomart=None):
-	#
-	# 	queryset = self.get_queryset()
-	# 	serializer = ImageSerializer(queryset, many=True, context={'request': Request(request),})
-	#
-	# 	return Response(serializer.data)
 
 class ImageDetail(RetrieveAPIView):
 
@@ -73,11 +66,11 @@ class ImageCreate(CreateAPIView):
 			# Save request image in the database
 			serializer.save()
 
-			# RUN OCR script
-			image_path = serializer.data.get('image')[1:]	# We need to remove slash from the beginning of the path
+			# We need to remove slash from the beginning of the path string
+			image_path = serializer.data.get('image')[1:]
 			image_abs_path = os.path.join(settings.BASE_DIR, image_path)
 
-			# Extract patterns(digits and arithmetic operators)
+			# Extract patterns
 			patterns = image.extract_patterns(image_abs_path)
 
 			# Run recognizer on each separate pattern

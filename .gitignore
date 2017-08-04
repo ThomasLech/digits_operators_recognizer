@@ -7,6 +7,7 @@ digits_operators_recognizer/resolver/migrations/__pycache__/
 db.sqlite3
 ocr/
 ocr/__pycache__/
+ocr/data/
 
 # Windows image file caches
 Thumbs.db
