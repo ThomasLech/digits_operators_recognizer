@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:\\Users\\Yeri\\Documents\\GitHub\\Handwritten-digits-and-operators-recognition-using-Neural-Networks\\convnet\\outputs\\mathocr.model"
+all_model_checkpoint_paths: "C:\\Users\\Yeri\\Documents\\GitHub\\Handwritten-digits-and-operators-recognition-using-Neural-Networks\\convnet\\outputs\\mathocr.model"

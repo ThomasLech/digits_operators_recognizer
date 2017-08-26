@@ -2,23 +2,14 @@ from digits_operators_recognizer.resolver.models import Image
 from rest_framework import serializers
 
 from django.core.files.base import ContentFile
+import base64
+import six
+import uuid
+import imghdr
 
 class Base64ImageField(serializers.ImageField):
-	"""
-	A Django REST framework field for handling image-uploads through raw post data.
-	It uses base64 for encoding and decoding the contents of the file.
-
-	Heavily based on
-	https://github.com/tomchristie/django-rest-framework/pull/1268
-
-	Updated for Django REST framework 3.
-	"""
 
 	def to_internal_value(self, data):
-		from django.core.files.base import ContentFile
-		import base64
-		import six
-		import uuid
 
 		# Check if this is a base64 string
 		if isinstance(data, six.string_types):
@@ -45,14 +36,11 @@ class Base64ImageField(serializers.ImageField):
 		return super(Base64ImageField, self).to_internal_value(data)
 
 	def get_file_extension(self, file_name, decoded_file):
-		import imghdr
 
 		extension = imghdr.what(file_name, decoded_file)
 		extension = "jpg" if extension == "jpeg" else extension
 
 		return extension
-
-
 
 
 class ImageSerializer(serializers.HyperlinkedModelSerializer):

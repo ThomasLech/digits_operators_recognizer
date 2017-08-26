@@ -33,8 +33,17 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from rest_framework.permissions import IsAdminUser
 
 # OCR scripts
-from ocr import image, model, recognizer
+from ocr import image
+from ai import convnet, predict
 
+import matplotlib.pyplot as plt
+
+# Restore model
+model_abs_path = os.path.join(settings.BASE_DIR, 'ai', 'model', 'mathocr.model')
+
+model = convnet.get_model(32, 25)
+# Restore model's pre-trained parameters
+model.load(model_abs_path)
 
 class ImageList(ListAPIView):
 
@@ -74,13 +83,14 @@ class ImageCreate(CreateAPIView):
 			patterns = image.extract_patterns(image_abs_path)
 
 			# Run recognizer on each separate pattern
-			prediction = recognizer.recognize(patterns)
+			prediction = ''
+			for pattern in patterns:
 
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
+				prediction += predict.predict(pattern, model) + ' '
+
+			return Response(prediction, status=status.HTTP_201_CREATED)
 
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 # class ImageList(APIView):
 #
